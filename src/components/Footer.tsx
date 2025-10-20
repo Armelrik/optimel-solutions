@@ -32,7 +32,7 @@ export default function Footer() {
             <Image
               src={optimelLogo}
               alt="OPTIMEL Logo"
-              className="h-12 w-auto mb-4"
+              className="h-12 rounded-xl w-auto mb-4"
               priority
             />
             <p className="text-muted-foreground font-bold max-w-md">

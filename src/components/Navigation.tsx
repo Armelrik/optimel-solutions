@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Menu, X, ChevronDown } from "lucide-react";
@@ -11,6 +11,7 @@ export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const closeTimeout = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -36,6 +37,17 @@ export default function Navigation() {
     { label: "Contact", href: "/#contact" },
   ];
 
+  const handleMouseEnter = (label: string) => {
+    if (closeTimeout.current) clearTimeout(closeTimeout.current);
+    setOpenDropdown(label);
+  };
+
+  const handleMouseLeave = () => {
+    closeTimeout.current = setTimeout(() => {
+      setOpenDropdown(null);
+    }, 200); // petit délai pour laisser le temps de cliquer
+  };
+
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -44,75 +56,65 @@ export default function Navigation() {
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
-          {/* ✅ Logo */}
+          {/* Logo */}
           <Link href="/" className="flex items-center gap-3">
             <Image
               src="/assets/optimel-logo.png"
               alt="OPTIMEL Logo"
               width={160}
               height={60}
-              className="h-12 md:h-14 w-auto"
+              className="h-12 md:h-14 rounded-xl w-auto"
               priority
             />
           </Link>
 
-          {/* ✅ Desktop Navigation */}
+          {/* Desktop nav */}
           <div className="hidden md:flex items-center gap-8 relative">
             {navItems.map((item) =>
               item.submenu ? (
                 <div
                   key={item.label}
                   className="relative group"
-                  onMouseEnter={() => setOpenDropdown(item.label)}
-                  onMouseLeave={() => {
-                    setTimeout(() => {
-                      setOpenDropdown((current) =>
-                        current === item.label ? null : current
-                      );
-                    }, 120);
-                  }}
+                  onMouseEnter={() => handleMouseEnter(item.label)}
+                  onMouseLeave={handleMouseLeave}
                 >
-                  <button
-                    className="flex items-center gap-1 text-foreground hover:text-primary transition-colors font-medium cursor-pointer"
-                    aria-haspopup="true"
-                  >
+                  <button className="flex items-center gap-1 text-foreground hover:text-primary font-medium transition-colors">
                     {item.label}
                     <ChevronDown size={16} className="opacity-70 mt-[2px]" />
                   </button>
 
-                  {/* ✨ Premium dropdown animation */}
                   <AnimatePresence>
                     {openDropdown === item.label && (
                       <motion.div
-                        initial={{ opacity: 0, y: -10, scale: 0.98 }}
+                        initial={{ opacity: 0, y: -8, scale: 0.98 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: -10, scale: 0.98 }}
+                        exit={{ opacity: 0, y: -8, scale: 0.98 }}
                         transition={{ duration: 0.25, ease: "easeOut" }}
                         className="
                           absolute left-0 mt-3 min-w-[220px]
                           rounded-2xl border border-white/20
-                          bg-white/70 dark:bg-black/60
+                          bg-white/70 dark:bg-black/20
                           backdrop-blur-2xl shadow-2xl overflow-hidden
                           ring-1 ring-primary/10
                         "
                       >
-                        <div className="relative before:absolute before:inset-0 before:rounded-2xl before:bg-gradient-to-br before:from-primary/5 before:to-accent/5">
-                          {item.submenu.map((sub) => (
-                            <Link
-                              key={sub.href}
-                              href={sub.href}
-                              className="
-                                block px-5 py-3 text-foreground 
-                                hover:text-primary font-medium 
-                                transition-all duration-200
-                                relative group/item
-                              "
-                            >
-                              <span className="relative z-10">{sub.label}</span>
-                              <span className="absolute inset-0 bg-primary/10 opacity-0 group-hover/item:opacity-100 transition-all duration-300" />
-                            </Link>
-                          ))}
-                        </div>
+                        {/* “zone tampon” pour éviter les flickers */}
+                        <div className="absolute -bottom-2 left-0 w-full h-3"></div>
+
+                        {item.submenu.map((sub) => (
+                          <Link
+                            key={sub.href}
+                            href={sub.href}
+                            className="
+                              block px-5 py-3 text-foreground 
+                              hover:text-primary font-medium relative group/item
+                              transition-all duration-200
+                            "
+                          >
+                            <span className="relative z-10">{sub.label}</span>
+                            <span className="absolute inset-0 bg-primary/10 opacity-0 group-hover/item:opacity-100 transition-all duration-300" />
+                          </Link>
+                        ))}
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -121,13 +123,14 @@ export default function Navigation() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="text-foreground hover:text-primary transition-colors font-medium"
+                  className="text-foreground hover:text-primary font-medium transition-colors"
                 >
                   {item.label}
                 </Link>
               )
             )}
 
+            {/* CTA */}
             <Link
               href="/academy"
               className="bg-primary hover:bg-accent text-primary-foreground px-6 py-2.5 rounded-full font-semibold transition-all hover:scale-105 shadow-lg"
@@ -135,11 +138,11 @@ export default function Navigation() {
               S&apos;inscrire
             </Link>
 
-            {/* ✅ Mode clair/sombre */}
+            {/* Bouton thème */}
             <ThemeToggle />
           </div>
 
-          {/* ✅ Mobile Menu Button */}
+          {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="md:hidden p-2 text-foreground"
@@ -149,7 +152,7 @@ export default function Navigation() {
           </button>
         </div>
 
-        {/* ✅ Mobile Navigation */}
+        {/* Mobile Navigation */}
         {isMobileMenuOpen && (
           <div className="md:hidden mt-4 glass rounded-2xl p-4 animate-slide-in">
             {navItems.map((item) =>
@@ -174,19 +177,13 @@ export default function Navigation() {
                   key={item.href}
                   href={item.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="block py-3 text-foreground hover:text-primary transition-colors font-medium"
+                  className="block py-3 text-foreground hover:text-primary font-medium transition-colors"
                 >
                   {item.label}
                 </Link>
               )
             )}
-            <Link
-              href="/academy"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="block mt-3 bg-primary hover:bg-accent text-primary-foreground px-6 py-2.5 rounded-full font-semibold text-center transition-all"
-            >
-              S&apos;inscrire
-            </Link>
+            <ThemeToggle />
           </div>
         )}
       </div>
