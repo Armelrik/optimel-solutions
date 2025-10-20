@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
+import ThemeToggle from "./ThemeToggle";
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -103,6 +104,9 @@ export default function Navigation() {
             >
               S&apos;inscrire
             </Link>
+
+            {/* Bouton clair/sombre */}
+            <ThemeToggle />
           </div>
 
           {/* ✅ Mobile Menu Button */}

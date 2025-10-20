@@ -2,35 +2,75 @@
 
 import { useEffect, useState } from "react";
 import { Moon, Sun } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function ThemeToggle() {
-  const [theme, setTheme] = useState<string>("light");
+  const [theme, setTheme] = useState<"light" | "dark">("light");
 
-  // Charge le thème depuis le localStorage
+  // Initialisation du thème
   useEffect(() => {
-    const savedTheme = localStorage.getItem("theme") || "light";
-    document.documentElement.classList.toggle("dark", savedTheme === "dark");
-    setTheme(savedTheme);
+    const stored = localStorage.getItem("theme");
+    const prefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
+    const initial =
+      (stored as "light" | "dark") || (prefersDark ? "dark" : "light");
+    setTheme(initial);
+    document.documentElement.classList.toggle("dark", initial === "dark");
   }, []);
 
+  // Basculer le thème
   const toggleTheme = () => {
-    const newTheme = theme === "light" ? "dark" : "light";
-    setTheme(newTheme);
-    localStorage.setItem("theme", newTheme);
-    document.documentElement.classList.toggle("dark", newTheme === "dark");
+    const next = theme === "light" ? "dark" : "light";
+    setTheme(next);
+    document.documentElement.classList.toggle("dark", next === "dark");
+    localStorage.setItem("theme", next);
   };
 
   return (
-    <button
+    <motion.button
       onClick={toggleTheme}
       aria-label="Basculer le thème"
-      className="p-2 rounded-full glass transition-all hover:scale-110"
+      whileTap={{ scale: 0.9 }}
+      className="
+        relative flex items-center justify-center
+        w-11 h-11 rounded-full
+        bg-primary/10 dark:bg-white/10
+        border border-border backdrop-blur-xl
+        shadow-lg hover:shadow-xl
+        transition-all duration-500
+      "
     >
-      {theme === "light" ? (
-        <Moon className="text-foreground" size={20} />
-      ) : (
-        <Sun className="text-yellow-400" size={20} />
-      )}
-    </button>
+      <AnimatePresence mode="wait" initial={false}>
+        {theme === "dark" ? (
+          <motion.div
+            key="sun"
+            initial={{ rotate: -180, opacity: 0 }}
+            animate={{ rotate: 0, opacity: 1 }}
+            exit={{ rotate: 180, opacity: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <Sun className="text-yellow-300" size={22} />
+          </motion.div>
+        ) : (
+          <motion.div
+            key="moon"
+            initial={{ rotate: 180, opacity: 0 }}
+            animate={{ rotate: 0, opacity: 1 }}
+            exit={{ rotate: -180, opacity: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <Moon className="text-primary" size={22} />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* halo animé */}
+      <span
+        className={`absolute inset-0 rounded-full blur-lg transition-opacity duration-700 ${
+          theme === "dark" ? "bg-yellow-300/30" : "bg-primary/30"
+        }`}
+      />
+    </motion.button>
   );
 }
