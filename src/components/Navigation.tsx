@@ -91,12 +91,14 @@ export default function Navigation() {
                         exit={{ opacity: 0, y: -8, scale: 0.98 }}
                         transition={{ duration: 0.25, ease: "easeOut" }}
                         className="
-                          absolute left-0 mt-3 min-w-[220px]
-                          rounded-2xl border border-white/20
-                          bg-white/70 dark:bg-black/20
-                          backdrop-blur-2xl shadow-2xl overflow-hidden
-                          ring-1 ring-primary/10
-                        "
+    absolute left-0 mt-3 min-w-[220px]
+    rounded-2xl border border-border/40
+    backdrop-blur-2xl shadow-2xl overflow-hidden
+    ring-1 ring-primary/10
+    bg-[hsl(var(--glass-bg)/0.8)]
+    text-[hsl(var(--foreground))]
+    transition-colors duration-500
+  "
                       >
                         {/* “zone tampon” pour éviter les flickers */}
                         <div className="absolute -bottom-2 left-0 w-full h-3"></div>
