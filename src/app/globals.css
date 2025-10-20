@@ -225,13 +225,27 @@ body {
     transform: translateY(-10px) scale(0.98);
   }
 }
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .dropdown-enter {
   animation: slideDownFade 0.25s ease-out forwards;
 }
 .dropdown-exit {
   animation: slideUpFade 0.2s ease-in forwards;
 }
-
+.animate-fade-in {
+  animation: fade-in 0.25s ease-out;
+}
 /* Transition utilitaire */
 .transition-glass {
   transition: all 0.3s ease-in-out;

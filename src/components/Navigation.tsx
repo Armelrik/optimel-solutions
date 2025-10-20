@@ -3,18 +3,17 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import ThemeToggle from "./ThemeToggle";
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -58,9 +57,67 @@ export default function Navigation() {
           </Link>
 
           {/* ✅ Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-8 relative">
             {navItems.map((item) =>
-              item.href ? (
+              item.submenu ? (
+                <div
+                  key={item.label}
+                  className="relative group"
+                  onMouseEnter={() => setOpenDropdown(item.label)}
+                  onMouseLeave={() => {
+                    setTimeout(() => {
+                      setOpenDropdown((current) =>
+                        current === item.label ? null : current
+                      );
+                    }, 120);
+                  }}
+                >
+                  <button
+                    className="flex items-center gap-1 text-foreground hover:text-primary transition-colors font-medium cursor-pointer"
+                    aria-haspopup="true"
+                  >
+                    {item.label}
+                    <ChevronDown size={16} className="opacity-70 mt-[2px]" />
+                  </button>
+
+                  {/* ✨ Premium dropdown animation */}
+                  <AnimatePresence>
+                    {openDropdown === item.label && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10, scale: 0.98 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: -10, scale: 0.98 }}
+                        transition={{ duration: 0.25, ease: "easeOut" }}
+                        className="
+                          absolute left-0 mt-3 min-w-[220px]
+                          rounded-2xl border border-white/20
+                          bg-white/70 dark:bg-black/60
+                          backdrop-blur-2xl shadow-2xl overflow-hidden
+                          ring-1 ring-primary/10
+                        "
+                      >
+                        <div className="relative before:absolute before:inset-0 before:rounded-2xl before:bg-gradient-to-br before:from-primary/5 before:to-accent/5">
+                          {item.submenu.map((sub) => (
+                            <Link
+                              key={sub.href}
+                              href={sub.href}
+                              className="
+                                block px-5 py-3 text-foreground 
+                                hover:text-primary font-medium 
+                                transition-all duration-200
+                                relative group/item
+                              "
+                            >
+                              <span className="relative z-10">{sub.label}</span>
+                              <span className="absolute inset-0 bg-primary/10 opacity-0 group-hover/item:opacity-100 transition-all duration-300" />
+                            </Link>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              ) : (
                 <Link
                   key={item.href}
                   href={item.href}
@@ -68,33 +125,6 @@ export default function Navigation() {
                 >
                   {item.label}
                 </Link>
-              ) : (
-                <div
-                  key={item.label}
-                  className="relative"
-                  onMouseEnter={() => setActiveDropdown(true)}
-                  onMouseLeave={() => setActiveDropdown(false)}
-                >
-                  <span className="text-foreground hover:text-primary cursor-pointer font-medium">
-                    {item.label}
-                  </span>
-                  {activeDropdown && (
-                    <div
-                      className="absolute left-0 mt-2 min-w-[220px] rounded-2xl backdrop-blur-xl border border-white/20 bg-white/40 shadow-2xl overflow-hidden dropdown-enter"
-                      style={{ animation: "slideDownFade 0.3s ease-out" }}
-                    >
-                      {item.submenu?.map((sub) => (
-                        <Link
-                          key={sub.href}
-                          href={sub.href}
-                          className="block px-5 py-3 text-foreground hover:bg-primary/10 transition-colors"
-                        >
-                          {sub.label}
-                        </Link>
-                      ))}
-                    </div>
-                  )}
-                </div>
               )
             )}
 
@@ -105,7 +135,7 @@ export default function Navigation() {
               S&apos;inscrire
             </Link>
 
-            {/* Bouton clair/sombre */}
+            {/* ✅ Mode clair/sombre */}
             <ThemeToggle />
           </div>
 
@@ -123,7 +153,23 @@ export default function Navigation() {
         {isMobileMenuOpen && (
           <div className="md:hidden mt-4 glass rounded-2xl p-4 animate-slide-in">
             {navItems.map((item) =>
-              item.href ? (
+              item.submenu ? (
+                <div key={item.label}>
+                  <p className="text-foreground font-semibold mt-2">
+                    {item.label}
+                  </p>
+                  {item.submenu.map((sub) => (
+                    <Link
+                      key={sub.href}
+                      href={sub.href}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="block py-2 pl-4 text-muted-foreground hover:text-primary transition-colors"
+                    >
+                      {sub.label}
+                    </Link>
+                  ))}
+                </div>
+              ) : (
                 <Link
                   key={item.href}
                   href={item.href}
@@ -132,17 +178,6 @@ export default function Navigation() {
                 >
                   {item.label}
                 </Link>
-              ) : (
-                item.submenu?.map((sub) => (
-                  <Link
-                    key={sub.href}
-                    href={sub.href}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="block py-3 text-foreground hover:text-primary transition-colors font-medium"
-                  >
-                    {sub.label}
-                  </Link>
-                ))
               )
             )}
             <Link
