@@ -9,6 +9,7 @@ import {
   energyPartners,
   energyBenefits,
 } from "@/constants/energy";
+import PageHero from "@/components/sections/PageHero";
 
 export const metadata = {
   title: "OPTIMEL Energy Solutions – Éclairer le Burkina, durablement",
@@ -19,6 +20,12 @@ export const metadata = {
 export default function EnergyPage() {
   return (
     <div className="min-h-screen">
+      <PageHero
+        title="OPTIMEL Energy Solutions"
+        subtitle="Éclairer le Burkina, durablement."
+        imageSrc="/assets/poles/finance.jpg"
+      />
+
       <div className="container mx-auto px-4 py-20">
         {/* Header */}
         <div className="text-center mb-16 animate-fade-in">

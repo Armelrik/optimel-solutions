@@ -1,7 +1,7 @@
 "use client";
 
 import { Mail, Phone, MapPin, Send } from "lucide-react";
-import ContactForm from "./ContactForm";
+import ContactForm from "./sections/ContactForm";
 
 export default function ContactSection() {
   return (

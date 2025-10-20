@@ -8,6 +8,7 @@ import {
   operationsPartners,
   operationsBenefits,
 } from "@/constants/operations";
+import PageHero from "@/components/sections/PageHero";
 
 export const metadata = {
   title:
@@ -19,6 +20,12 @@ export const metadata = {
 export default function OperationsPage() {
   return (
     <div className="min-h-screen">
+      <PageHero
+        title="OPTIMEL Operations Solutions"
+        subtitle="Des organisations performantes pour un impact durable."
+        imageSrc="/assets/poles/management.jpg"
+      />
+
       <div className="container mx-auto px-4 py-20">
         {/* Header */}
         <div className="text-center mb-16 animate-fade-in">

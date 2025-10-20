@@ -19,6 +19,18 @@ export const formations: Record<string, Formation[]> = {
       tarif: "250,000 FCFA",
       places: "20",
     },
+    {
+      titre: "Risques Stratégique",
+      duree: "2 jours",
+      tarif: "100,000 FCFA",
+      places: "17",
+    },
+    {
+      titre: "Gestion de Projets Privés",
+      duree: "5 jours",
+      tarif: "250,000 FCFA",
+      places: "28",
+    },
   ],
   operations: [
     {
@@ -32,6 +44,12 @@ export const formations: Record<string, Formation[]> = {
       duree: "6 jours",
       tarif: "300,000 FCFA",
       places: "12",
+    },
+    {
+      titre: "Certification ISO 800",
+      duree: "5 jours",
+      tarif: "200,000 FCFA",
+      places: "19",
     },
   ],
   it: [

@@ -8,6 +8,7 @@ import {
   strategiePartners,
   strategieBenefits,
 } from "@/constants/strategie";
+import PageHero from "@/components/sections/PageHero";
 
 export const metadata = {
   title: "OPTIMEL Stratégie Solutions – Donner une vision claire aux décideurs",
@@ -18,6 +19,12 @@ export const metadata = {
 export default function StrategiePage() {
   return (
     <div className="min-h-screen">
+      <PageHero
+        title="OPTIMEL Stratégie Solutions"
+        subtitle="Donner une vision claire aux décideurs."
+        imageSrc="/assets/poles/strategie.jpg"
+      />
+
       <div className="container mx-auto px-4 py-20">
         {/* Header */}
         <div className="text-center mb-16 animate-fade-in">

@@ -8,6 +8,7 @@ import {
   partenariatsAvantages,
   partenariatsContacts,
 } from "@/constants/partenariats";
+import PageHero from "@/components/sections/PageHero";
 
 export const metadata = {
   title: "OPTIMEL Partenariats – Ensemble pour un développement durable",
@@ -18,6 +19,11 @@ export const metadata = {
 export default function PartenariatsPage() {
   return (
     <div className="min-h-screen">
+      <PageHero
+        title="OPTIMEL Partenariats"
+        subtitle="Ensemble pour un développement durable."
+        imageSrc="/assets/poles/partenariat.jpg"
+      />
       <div className="container mx-auto px-4 py-20">
         {/* Header */}
         <div className="text-center mb-16 animate-fade-in">

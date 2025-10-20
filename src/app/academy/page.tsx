@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { formations } from "@/constants/academy";
+import PageHero from "@/components/sections/PageHero";
 
 export const metadata = {
   title: "OPTIMEL Academy – Formations professionnelles et certifiantes",
@@ -29,6 +30,12 @@ export const metadata = {
 export default function AcademyPage() {
   return (
     <div className="min-h-screen">
+      <PageHero
+        title="OPTIMEL Academy"
+        subtitle="Développez vos compétences avec des experts."
+        imageSrc="/assets/trainings/leadership.jpg"
+      />
+
       <div className="container mx-auto px-4 py-20 mt-6">
         {/* Header */}
         <div className="text-center mb-16 animate-fade-in">

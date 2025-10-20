@@ -9,6 +9,7 @@ import {
   itPartners,
   itBenefits,
 } from "@/constants/it";
+import PageHero from "@/components/sections/PageHero";
 
 export const metadata = {
   title: "OPTIMEL IT Solutions – Le numérique au service du développement",
@@ -19,6 +20,12 @@ export const metadata = {
 export default function ITPage() {
   return (
     <div className="min-h-screen">
+      <PageHero
+        title="OPTIMEL IT Solutions"
+        subtitle="Le numérique au service du développement."
+        imageSrc="/assets/poles/digital.jpg"
+      />
+
       <div className="container mx-auto px-4 py-20">
         {/* Header */}
         <div className="text-center mb-16 animate-fade-in">

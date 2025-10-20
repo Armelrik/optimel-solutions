@@ -9,6 +9,7 @@ import {
   btpPartenaires,
   btpBenefices,
 } from "@/constants/btp";
+import PageHero from "@/components/sections/PageHero";
 
 export const metadata = {
   title: "OPTIMEL BTP Solutions – Construire aujourd'hui, pour demain",
@@ -19,6 +20,13 @@ export const metadata = {
 export default function BTPPage() {
   return (
     <div className="min-h-screen">
+      {/* === Hero Image === */}
+      <PageHero
+        title="OPTIMEL BTP Solutions"
+        subtitle="Construire aujourd’hui, pour demain."
+        imageSrc="/assets/poles/btp.jpg"
+      />
+
       <div className="container mx-auto px-4 py-20">
         {/* Header */}
         <div className="text-center mb-16 animate-fade-in">

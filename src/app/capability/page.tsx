@@ -10,6 +10,7 @@ import {
   capabilityPartners,
   capabilityBenefits,
 } from "@/constants/capability";
+import PageHero from "@/components/sections/PageHero";
 
 export const metadata = {
   title:
@@ -21,6 +22,12 @@ export const metadata = {
 export default function CapabilityPage() {
   return (
     <div className="min-h-screen">
+      <PageHero
+        title="OPTIMEL Capability Solutions"
+        subtitle="Former et inspirer les leaders de demain."
+        imageSrc="/assets/poles/rh.jpg"
+      />
+
       <div className="container mx-auto px-4 py-20">
         {/* Header */}
         <div className="text-center mb-16 animate-fade-in">
