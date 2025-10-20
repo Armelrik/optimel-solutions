@@ -1,6 +1,7 @@
 "use client";
 
 import { Mail, Phone, MapPin, Send } from "lucide-react";
+import ContactForm from "./ContactForm";
 
 export default function ContactSection() {
   return (
@@ -34,12 +35,12 @@ export default function ContactSection() {
                 {
                   icon: Phone,
                   title: "Téléphone",
-                  content: "+226 XX XX XX XX",
+                  content: "+226 70 80 90 70",
                 },
                 {
                   icon: Mail,
                   title: "Email",
-                  content: "contact@optimel.bf",
+                  content: "contact@optimelsolutionsgroup.com",
                 },
               ].map((item) => (
                 <div key={item.title} className="flex items-start gap-4">
@@ -65,15 +66,19 @@ export default function ContactSection() {
                 {[
                   {
                     label: "Facebook",
-                    url: "https://facebook.com/optimelgroup",
+                    url: "https://facebook.com/optimelsolutionsgroup",
                   },
                   {
                     label: "LinkedIn",
-                    url: "https://linkedin.com/company/optimelgroup",
+                    url: "https://linkedin.com/company/optimelsolutionsgroup",
                   },
                   {
                     label: "Twitter",
-                    url: "https://x.com/optimelgroup",
+                    url: "https://x.com/optimelsolutionsgroup",
+                  },
+                  {
+                    label: "Instagram",
+                    url: "https://instagram.com/optimelsolutionsgroup",
                   },
                 ].map((social) => (
                   <a
@@ -99,7 +104,9 @@ export default function ContactSection() {
               Envoyez-nous un message
             </h3>
 
-            <form
+            <ContactForm />
+
+            {/* <form
               className="space-y-4"
               onSubmit={(e) => {
                 e.preventDefault();
@@ -160,7 +167,7 @@ export default function ContactSection() {
                 <Send size={20} />
                 Envoyer le message
               </button>
-            </form>
+            </form> */}
           </div>
         </div>
       </div>
