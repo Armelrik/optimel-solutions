@@ -69,7 +69,7 @@ export default function FormationsSection() {
             </p>
 
             <Link
-              href="#contact"
+              href="/academy"
               className="inline-block bg-primary hover:bg-accent text-primary-foreground px-10 py-4 rounded-full font-semibold text-lg transition-all hover:scale-105 shadow-xl"
             >
               S&apos;inscrire maintenant

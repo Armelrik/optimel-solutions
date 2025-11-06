@@ -47,7 +47,7 @@ export default function HeroSection() {
               </Link>
 
               <Link
-                href="#formations"
+                href="/academy"
                 className="glass-dark text-foreground px-8 py-4 rounded-full font-semibold transition-all hover:scale-105 shadow-xl"
               >
                 Nos formations

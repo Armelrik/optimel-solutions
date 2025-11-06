@@ -8,6 +8,7 @@ import {
   CheckCircle2,
   ArrowRight,
 } from "lucide-react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -20,6 +21,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { formations } from "@/constants/academy";
 import PageHero from "@/components/sections/PageHero";
+import RegistrationForm from "@/components/sections/RegistrationForm";
 
 export const metadata = {
   title: "OPTIMEL Academy – Formations professionnelles et certifiantes",
@@ -161,10 +163,12 @@ export default function AcademyPage() {
                         </div>
                       </CardContent>
                       <CardFooter>
-                        <Button className="w-full gap-2">
-                          S’inscrire maintenant
-                          <ArrowRight size={16} />
-                        </Button>
+                        <Link href="#inscription" className="w-full">
+                          <Button className="w-full gap-2">
+                            S’inscrire maintenant
+                            <ArrowRight size={16} />
+                          </Button>
+                        </Link>
                       </CardFooter>
                     </Card>
                   ))}
@@ -190,9 +194,9 @@ export default function AcademyPage() {
               <ol className="space-y-3">
                 {[
                   "Choisissez votre formation dans le catalogue",
-                  "Remplissez le formulaire d’inscription en ligne",
+                  "Remplissez le formulaire d’inscription ci-dessous",
                   "Effectuez le paiement via Mobile Money",
-                  "Recevez votre confirmation par email et SMS",
+                  "Recevez votre confirmation par email",
                 ].map((step, i) => (
                   <li key={i} className="flex items-start gap-3">
                     <span className="bg-primary text-primary-foreground rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0">
@@ -214,7 +218,7 @@ export default function AcademyPage() {
                   label: "🔵 Moov Money",
                   desc: "Transaction rapide et facile",
                 },
-                { label: "🟡 Wave", desc: "Solution de paiement mobile" },
+                { label: "🔵 Wave", desc: "Solution de paiement mobile" },
               ].map((mode) => (
                 <div
                   key={mode.label}
@@ -228,6 +232,11 @@ export default function AcademyPage() {
               ))}
             </div>
           </div>
+        </section>
+
+        {/* Formulaire d'inscription */}
+        <section id="inscription" className="py-20">
+          <RegistrationForm />
         </section>
 
         {/* Certificats */}
@@ -281,14 +290,22 @@ export default function AcademyPage() {
             bénéficiez de formations de qualité adaptées au marché burkinabè.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="gap-2">
-              S’inscrire maintenant
-              <ArrowRight size={20} />
-            </Button>
-            <Button size="lg" variant="outline" className="gap-2">
-              Télécharger le catalogue complet
-              <ArrowRight size={20} />
-            </Button>
+            <Link href="#inscription">
+              <Button size="lg" className="gap-2">
+                S’inscrire maintenant
+                <ArrowRight size={20} />
+              </Button>
+            </Link>
+            <a
+              href="/assets/catalogue.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button size="lg" variant="outline" className="gap-2">
+                Télécharger le catalogue complet
+                <ArrowRight size={20} />
+              </Button>
+            </a>
           </div>
         </div>
       </div>

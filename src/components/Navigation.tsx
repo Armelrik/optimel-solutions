@@ -134,7 +134,7 @@ export default function Navigation() {
 
             {/* CTA */}
             <Link
-              href="/academy"
+              href="/academy#inscription"
               className="bg-primary hover:bg-accent text-primary-foreground px-6 py-2.5 rounded-full font-semibold transition-all hover:scale-105 shadow-lg"
             >
               S&apos;inscrire
@@ -185,7 +185,20 @@ export default function Navigation() {
                 </Link>
               )
             )}
-            <ThemeToggle />
+            {/* Mobile CTA */}
+            <div className="mt-4 pt-4 border-t border-border/20">
+              <Link
+                href="/academy#inscription"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="block w-full text-center bg-primary hover:bg-accent text-primary-foreground px-6 py-3 rounded-full font-semibold transition-all shadow-lg"
+              >
+                S&apos;inscrire
+              </Link>
+            </div>
+
+            <div className="mt-6 flex justify-center">
+              <ThemeToggle />
+            </div>
           </div>
         )}
       </div>

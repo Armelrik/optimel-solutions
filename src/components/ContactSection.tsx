@@ -35,12 +35,12 @@ export default function ContactSection() {
                 {
                   icon: Phone,
                   title: "Téléphone",
-                  content: "+226 70 80 90 70",
+                  content: "+226 70 89 81 89",
                 },
                 {
                   icon: Mail,
                   title: "Email",
-                  content: "contact@optimelsolutionsgroup.com",
+                  content: "contact@optimelsolutions.com",
                 },
               ].map((item) => (
                 <div key={item.title} className="flex items-start gap-4">

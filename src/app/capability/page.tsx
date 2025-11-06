@@ -1,6 +1,7 @@
 // "use client";
 
 import { GraduationCap, CheckCircle2, Users, ArrowRight } from "lucide-react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
   capabilityServices,
@@ -199,14 +200,18 @@ export default function CapabilityPage() {
             Investissez dans votre avenir
           </h2>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="gap-2">
-              S'inscrire aux formations
-              <ArrowRight size={20} />
-            </Button>
-            <Button size="lg" variant="outline" className="gap-2">
-              Voir le catalogue complet
-              <ArrowRight size={20} />
-            </Button>
+            <Link href="/#contact">
+              <Button size="lg" className="gap-2">
+                S'inscrire aux formations
+                <ArrowRight size={20} />
+              </Button>
+            </Link>
+            <Link href="/#contact">
+              <Button size="lg" variant="outline" className="gap-2">
+                Voir le catalogue complet
+                <ArrowRight size={20} />
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
